@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>ExamSathi AI - Government Exam Preparation</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;color:#172033;
+  padding-bottom:75px;
+}
+body.dark{background:#101827;color:#f1f5f9}
+header{
+  background:linear-gradient(135deg,#2563eb,#4f46e5);
+  color:white;padding:18px 16px;
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 3px 12px #0002;
+}
+.top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:23px;font-weight:800}
+.tag{font-size:12px;opacity:.9;margin-top:4px}
+.lang{
+  background:#ffffff22;color:white;border:1px solid #ffffff66;
+  padding:8px 10px;border-radius:10px;font-weight:bold;
+}
+.container{max-width:1000px;margin:auto;padding:15px}
+.search{
+  width:100%;padding:14px;border:1px solid #dbe2ee;
+  border-radius:14px;background:white;font-size:15px;
+  margin-bottom:15px;
+}
+.dark .search,.dark .card,.dark .box,.dark .question{
+  background:#182235;color:#f1f5f9;border-color:#334155;
+}
+.hero{
+  background:linear-gradient(135deg,#1d4ed8,#7c3aed);
+  color:white;border-radius:20px;padding:22px;margin-bottom:18px;
+}
+.hero h1{font-size:25px;margin-bottom:8px}
+.hero p{opacity:.9;line-height:1.5}
+.grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{
+  background:white;border:1px solid #e5eaf2;border-radius:17px;
+  padding:17px;cursor:pointer;transition:.2s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px #0001}
+.icon{font-size:27px;margin-bottom:8px}
+.card h3{font-size:15px;margin-bottom:5px}
+.card p{font-size:12px;color:#64748b}
+.dark .card p{color:#94a3b8}
+.section-title{font-size:19px;margin:22px 0 12px}
+.box,.question{
+  background:white;border:1px solid #e5eaf2;border-radius:16px;
+  padding:17px;margin-bottom:12px;
+}
+.btn{
+  border:0;border-radius:11px;padding:11px 15px;
+  background:#2563eb;color:white;font-weight:bold;cursor:pointer;
+}
+.btn.secondary{background:#e2e8f0;color:#172033}
+.btn.success{background:#16a34a}
+.btn.danger{background:#dc2626}
+.btn.small{padding:8px 11px;font-size:12px}
+.back{
+  background:none;border:0;color:#2563eb;font-weight:bold;
+  margin-bottom:15px;cursor:pointer;font-size:15px;
+}
+.exam{
+  display:flex;justify-content:space-between;gap:10px;
+  align-items:center;
+}
+.badge{
+  background:#dbeafe;color:#1d4ed8;padding:5px 8px;
+  border-radius:8px;font-size:11px;font-weight:bold;
+}
+.dark .badge{background:#1e3a8a;color:#bfdbfe}
+.options button{
+  width:100%;text-align:left;margin-top:9px;
+  background:#f8fafc;color:#172033;border:1px solid #dbe2ee;
+  padding:12px;border-radius:10px;cursor:pointer;
+}
+.dark .options button{background:#202c40;color:white;border-color:#3b4a61}
+.options button.correct{background:#dcfce7!important;border-color:#16a34a}
+.options button.wrong{background:#fee2e2!important;border-color:#dc2626}
+.bottom{
+  position:fixed;bottom:0;left:0;right:0;background:white;
+  border-top:1px solid #ddd;display:flex;justify-content:space-around;
+  padding:9px 4px;z-index:60;
+}
+.dark .bottom{background:#111827;border-color:#334155}
+.bottom button{
+  border:0;background:none;font-size:11px;color:#64748b;cursor:pointer;
+}
+.bottom b{display:block;font-size:20px;margin-bottom:2px}
+.dark .bottom button{color:#cbd5e1}
+.stat{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+}
+.stat div{
+  background:#eff6ff;border-radius:14px;padding:15px;
+}
+.dark .stat div{background:#172554}
+.stat strong{font-size:22px;display:block}
+.hide{display:none!important}
+.timer{
+  position:sticky;top:75px;background:#fee2e2;color:#b91c1c;
+  padding:10px;text-align:center;border-radius:10px;font-weight:bold;
+  z-index:20;margin-bottom:10px;
+}
+.note{
+  line-height:1.7;font-size:14px;
+}
+footer{text-align:center;color:#64748b;padding:25px 10px;font-size:12px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="top">
+    <div>
+      <div class="logo">🎓 ExamSathi AI</div>
+      <div class="tag">Government Exam Preparation • Learn • Practice • Succeed</div>
+    </div>
+    <button class="lang" onclick="toggleLanguage()" id="langBtn">हिंदी</button>
+  </div>
+</header>
+
+<main class="container">
+
+<div id="app"></div>
+
+</main>
+
+<nav class="bottom">
+  <button onclick="home()"><b>🏠</b>Home</button>
+  <button onclick="showExams()"><b>🇮🇳</b>Exams</button>
+  <button onclick="showPractice()"><b>📝</b>Practice</button>
+  <button onclick="showNotes()"><b>📚</b>Notes</button>
+  <button onclick="showMore()"><b>☰</b>More</button>
+</nav>
+
+<script>
+
+/* =========================================================
+   EXAMS
+========================================================= */
+
+const exams=[
+["UPSC Civil Services","UPSC","Central Government"],
+["CDS","Defence","Defence"],
+["NDA","Defence","Defence"],
+["AFCAT","Defence","Defence"],
+["CAPF","Defence","Defence"],
+["SSC CGL","SSC","Staff Selection Commission"],
+["SSC CHSL","SSC","Staff Selection Commission"],
+["SSC MTS","SSC","Staff Selection Commission"],
+["SSC GD","SSC","Staff Selection Commission"],
+["SSC CPO","SSC","Staff Selection Commission"],
+["RRB NTPC","Railway","Railway"],
+["RRB Group D","Railway","Railway"],
+["RRB ALP","Railway","Railway"],
+["RRB Technician","Railway","Railway"],
+["RRB JE","Railway","Railway"],
+["IBPS PO","Banking","Banking"],
+["IBPS Clerk","Banking","Banking"],
+["SBI PO","Banking","Banking"],
+["SBI Clerk","Banking","Banking"],
+["RBI Grade B","Banking","Banking"],
+["CTET","Teaching","Education"],
+["State PSC","State Exams","State Government"],
+["State Police","Police","State Government"],
+["Constable Exams","Police","Police"],
+["Other Government Exams","Other","Government"]
+];
+
+/* =========================================================
+   SUBJECTS
+========================================================= */
+
+const subjects=[
+["General Knowledge","🌍"],
+["Current Affairs","📰"],
+["History","🏛️"],
+["Geography","🌎"],
+["Indian Polity","⚖️"],
+["Economics","💰"],
+["General Science","🔬"],
+["Physics","⚡"],
+["Chemistry","🧪"],
+["Biology","🧬"],
+["Mathematics","➗"],
+["Reasoning","🧠"],
+["English","🔤"],
+["Hindi","अ"],
+["Computer","💻"],
+["Static GK","📌"]
+];
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+const notes=[
+["Indian Polity","Constitution of India","भारतीय संविधान भारत का सर्वोच्च कानून है। इसमें संघ, राज्य, मौलिक अधिकार, नीति निर्देशक तत्व और नागरिकों के कर्तव्यों से संबंधित प्रावधान हैं।"],
+["History","Modern India","आधुनिक भारतीय इतिहास में 1857 का विद्रोह, भारतीय राष्ट्रीय कांग्रेस, स्वतंत्रता आंदोलन और प्रमुख घटनाएँ महत्वपूर्ण हैं।"],
+["Geography","Indian Geography","भारत में हिमालय, उत्तरी मैदान, प्रायद्वीपीय पठार, तटीय मैदान और द्वीप समूह प्रमुख भौगोलिक भाग हैं।"],
+["Economics","Basic Economics","अर्थव्यवस्था में उत्पादन, वितरण, उपभोग, आय, रोजगार, मुद्रास्फीति और विकास जैसे विषय महत्वपूर्ण हैं।"],
+["Science","General Science","सामान्य विज्ञान में भौतिकी, रसायन विज्ञान और जीव विज्ञान के मूल सिद्धांतों से प्रश्न पूछे जाते हैं।"],
+["Computer","Computer Basics","कंप्यूटर एक electronic device है जो data को process करके information देता है। CPU को कंप्यूटर का brain कहा जाता है।"],
+["Biology","Human Body","मानव शरीर में विभिन्न अंग-तंत्र जैसे पाचन, श्वसन, परिसंचरण और तंत्रिका तंत्र महत्वपूर्ण हैं।"],
+["Physics","Units & Measurement","SI system में लंबाई की इकाई metre, mass की kilogram और time की second है।"]
+];
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+const mcqs=[
+{
+q:"भारत का संविधान कब लागू हुआ?",
+en:"When did the Constitution of India come into force?",
+o:["15 August 1947","26 January 1950","26 November 1949","2 October 1950"],
+a:1,
+sub:"Polity",
+exp:"भारतीय संविधान 26 जनवरी 1950 को लागू हुआ।"
+},
+{
+q:"भारत की राजधानी क्या है?",
+en:"What is the capital of India?",
+o:["Mumbai","New Delhi","Kolkata","Chennai"],
+a:1,
+sub:"GK",
+exp:"भारत की राजधानी नई दिल्ली है।"
+},
+{
+q:"पानी का रासायनिक सूत्र क्या है?",
+en:"What is the chemical formula of water?",
+o:["CO2","O2","H2O","NaCl"],
+a:2,
+sub:"Science",
+exp:"पानी का रासायनिक सूत्र H₂O है।"
+},
+{
+q:"भारतीय संविधान के मौलिक अधिकार किस भाग में हैं?",
+en:"Fundamental Rights are contained in which Part?",
+o:["Part I","Part II","Part III","Part IV"],
+a:2,
+sub:"Polity",
+exp:"मौलिक अधिकार संविधान के भाग III में हैं।"
+},
+{
+q:"पृथ्वी का एकमात्र प्राकृतिक उपग्रह कौन है?",
+en:"What is Earth's natural satellite?",
+o:["Mars","Moon","Venus","Sun"],
+a:1,
+sub:"Science",
+exp:"चंद्रमा पृथ्वी का प्राकृतिक उपग्रह है।"
+},
+{
+q:"CPU का पूरा नाम क्या है?",
+en:"What is the full form of CPU?",
+o:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],
+a:0,
+sub:"Computer",
+exp:"CPU का पूरा नाम Central Processing Unit है।"
+},
+{
+q:"भारत में RBI की स्थापना किस वर्ष हुई?",
+en:"In which year was RBI established?",
+o:["1935","1947","1950","1920"],
+a:0,
+sub:"Economics",
+exp:"Reserve Bank of India की स्थापना 1935 में हुई।"
+},
+{
+q:"1857 का विद्रोह किस नाम से भी जाना जाता है?",
+en:"The Revolt of 1857 is also known as?",
+o:["Civil Disobedience","First War of Independence","Quit India Movement","Swadeshi Movement"],
+a:1,
+sub:"History",
+exp:"1857 के विद्रोह को First War of Independence भी कहा जाता है।"
+}
+];
+
+/* =========================================================
+   CURRENT AFFAIRS
+========================================================= */
+
+const currentAffairs=[
+["Current Affairs","राष्ट्रीय घटनाएँ","महत्वपूर्ण सरकारी योजनाओं, राष्ट्रीय घटनाओं और नीतिगत निर्णयों को नियमित रूप से revise करें।"],
+["Current Affairs","अंतरराष्ट्रीय घटनाएँ","अंतरराष्ट्रीय संगठन, प्रमुख सम्मेलन, देशों के संबंध और महत्वपूर्ण वैश्विक घटनाएँ परीक्षा के लिए महत्वपूर्ण हैं।"],
+["Current Affairs","Sports","प्रमुख टूर्नामेंट, विजेता, पुरस्कार और खिलाड़ियों से संबंधित घटनाओं को नोट करें।"],
+["Current Affairs","Awards","राष्ट्रीय एवं अंतरराष्ट्रीय पुरस्कार और सम्मान current affairs में महत्वपूर्ण होते हैं।"],
+["Current Affairs","Science & Technology","नई वैज्ञानिक उपलब्धियाँ, space missions, technology और defence technology पर विशेष ध्यान दें।"]
+];
+
+/* =========================================================
+   APP STATE
+========================================================= */
+
+let language="en";
+let score=0;
+let attempted=0;
+let bookmarked=[];
+let wrong=[];
+let progress=JSON.parse(localStorage.getItem("examProgress")||"{}");
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+function save(){
+ localStorage.setItem("examProgress",JSON.stringify(progress));
+}
+
+function title(){
+ return language==="en"?"India's Government Exam Preparation":"भारत की सरकारी परीक्षा तैयारी";
+}
+
+function home(){
+ document.getElementById("app").innerHTML=`
+
+ <section class="hero">
+   <h1>🎓 ${language==="en"?"ExamSathi AI":"एग्जामसाथी AI"}</h1>
+   <p>${language==="en"
+   ?"Prepare for Government Exams with Notes, MCQs, PYQs, Mock Tests and Current Affairs."
+   :"नोट्स, MCQ, PYQ, मॉक टेस्ट और करंट अफेयर्स के साथ सरकारी परीक्षाओं की तैयारी करें।"}</p>
+ </section>
+
+ <input class="search" placeholder="${language==="en"?"Search exams, subjects, notes...":"परीक्षा, विषय, नोट्स खोजें..."}"
+ oninput="globalSearch(this.value)">
+
+ <div class="stat">
+   <div><strong>${score}</strong><small>${language==="en"?"Practice Score":"प्रैक्टिस स्कोर"}</small></div>
+   <div><strong>${attempted}</strong><small>${language==="en"?"Questions Attempted":"प्रश्न हल किए"}</small></div>
+ </div>
+
+ <h2 class="section-title">${language==="en"?"Explore":"एक्सप्लोर करें"}</h2>
+
+ <div class="grid">
+   <div class="card" onclick="showExams()"><div class="icon">🇮🇳</div><h3>Government Exams</h3><p>SSC, Railway, Defence, Banking & more</p></div>
+   <div class="card" onclick="showNotes()"><div class="icon">📚</div><h3>Notes</h3><p>All important subjects</p></div>
+   <div class="card" onclick="showCurrent()"><div class="icon">📰</div><h3>Current Affairs</h3><p>Daily & monthly preparation</p></div>
+   <div class="card" onclick="showMCQ()"><div class="icon">📝</div><h3>MCQ Practice</h3><p>Topic-wise questions</p></div>
+   <div class="card" onclick="startMock()"><div class="icon">🎯</div><h3>Mock Test</h3><p>Full practice test</p></div>
+   <div class="card" onclick="showPYQ()"><div class="icon">📄</div><h3>PYQ</h3><p>Previous year practice</p></div>
+   <div class="card" onclick="showSubjects()"><div class="icon">📖</div><h3>Chapter Tests</h3><p>Chapter-wise tests</p></div>
+   <div class="card" onclick="showRevision()"><div class="icon">⚡</div><h3>Revision</h3><p>Quick revision</p></div>
+ </div>
+
+ <h2 class="section-title">🔥 Daily Practice</h2>
+ <div class="box">
+   <h3>Daily 10 MCQ Challenge</h3>
+   <p style="margin:8px 0 13px;color:#64748b">Practice questions every day and improve your score.</p>
+   <button class="btn" onclick="startMock()">Start Challenge</button>
+ </div>
+
+ <footer>ExamSathi AI • Learn • Practice • Succeed</footer>
+ `;
+}
+
+function toggleLanguage(){
+ language=language==="en"?"hi":"en";
+ document.getElementById("langBtn").innerText=language==="en"?"हिंदी":"English";
+ home();
+}
+
+/* =========================================================
+   EXAMS
+========================================================= */
+
+function showExams(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">🇮🇳 Government Exams</h2>
+ <input class="search" placeholder="Search exam..." oninput="filterExams(this.value)">
+ <div id="examList"></div>
+ `;
+ renderExams(exams);
+}
+
+function renderExams(list){
+ document.getElementById("examList").innerHTML=list.map((e,i)=>`
+ <div class="box exam">
+   <div>
+    <h3>${e[0]}</h3>
+    <p style="margin-top:5px;color:#64748b">${e[1]} • ${e[2]}</p>
+   </div>
+   <button class="btn small" onclick="examDetails('${e[0]}')">Open</button>
+ </div>
+ `).join("");
+}
+
+function filterExams(v){
+ renderExams(exams.filter(x=>x[0].toLowerCase().includes(v.toLowerCase())));
+}
+
+function examDetails(name){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showExams()">← Exams</button>
+ <div class="hero">
+   <h1>🎯 ${name}</h1>
+   <p>Complete preparation dashboard</p>
+ </div>
+ <div class="grid">
+   <div class="card" onclick="showNotes()"><div class="icon">📚</div><h3>Notes</h3></div>
+   <div class="card" onclick="showMCQ()"><div class="icon">📝</div><h3>MCQ</h3></div>
+   <div class="card" onclick="startMock()"><div class="icon">🎯</div><h3>Mock Test</h3></div>
+   <div class="card" onclick="showPYQ()"><div class="icon">📄</div><h3>PYQ</h3></div>
+ </div>
+ <div class="box" style="margin-top:15px">
+  <h3>📋 Preparation</h3>
+  <p class="note">Syllabus → Notes → Chapter Tests → PYQ → Mock Tests → Revision</p>
+ </div>
+ `;
+}
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function showNotes(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">📚 All Subjects Notes</h2>
+ <div class="grid">
+ ${subjects.map(s=>`
+ <div class="card" onclick="subjectNotes('${s[0]}')">
+   <div class="icon">${s[1]}</div>
+   <h3>${s[0]}</h3>
+   <p>Important exam notes</p>
+ </div>`).join("")}
+ </div>
+ `;
+}
+
+function subjectNotes(subject){
+ let data=notes.find(x=>x[0].toLowerCase().includes(subject.toLowerCase().split(" ")[0]));
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showNotes()">← Subjects</button>
+ <h2 class="section-title">📖 ${subject}</h2>
+ <div class="box">
+   <h3>${data?data[1]:"Important Topics"}</h3>
+   <p class="note">${data?data[2]:"इस विषय के महत्वपूर्ण topics को chapter-wise पढ़ें और उसके बाद chapter test दें।"}</p>
+ </div>
+ <button class="btn" onclick="chapterTest('${subject}')">📝 Chapter Test</button>
+ `;
+}
+
+/* =========================================================
+   CURRENT AFFAIRS
+========================================================= */
+
+function showCurrent(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">📰 Current Affairs</h2>
+ <div class="grid">
+  <div class="card"><div class="icon">📅</div><h3>Daily Current Affairs</h3><p>Daily revision</p></div>
+  <div class="card"><div class="icon">🗓️</div><h3>Monthly Current Affairs</h3><p>Month-wise revision</p></div>
+  <div class="card"><div class="icon">🌐</div><h3>International</h3><p>World events</p></div>
+  <div class="card"><div class="icon">🏛️</div><h3>National</h3><p>India events</p></div>
+ </div>
+ <h2 class="section-title">Important Current Affairs Topics</h2>
+ ${currentAffairs.map(x=>`
+ <div class="box">
+  <span class="badge">${x[0]}</span>
+  <h3 style="margin:8px 0">${x[1]}</h3>
+  <p class="note">${x[2]}</p>
+ </div>`).join("")}
+ <button class="btn" onclick="showMCQ()">📝 Current Affairs MCQ</button>
+ `;
+}
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+function showPractice(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">📝 Practice Zone</h2>
+ <div class="grid">
+  <div class="card" onclick="showMCQ()"><div class="icon">📝</div><h3>MCQ Practice</h3></div>
+  <div class="card" onclick="chapterTest('General Knowledge')"><div class="icon">📖</div><h3>Chapter Test</h3></div>
+  <div class="card" onclick="startMock()"><div class="icon">🎯</div><h3>Mock Test</h3></div>
+  <div class="card" onclick="showPYQ()"><div class="icon">📄</div><h3>PYQ</h3></div>
+ </div>`;
+}
+
+function showMCQ(){
+ let html=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">📝 MCQ Practice</h2>
+ <div class="box"><b>Topic:</b> Mixed Government Exam Questions</div>
+ <div id="mcqArea"></div>
+ `;
+ document.getElementById("app").innerHTML=html;
+ renderQuestions(mcqs,"mcqArea");
+}
+
+function renderQuestions(data,id){
+ document.getElementById(id).innerHTML=data.map((x,i)=>`
+ <div class="question">
+  <span class="badge">${x.sub}</span>
+  <h3 style="margin:10px 0">${i+1}. ${language==="en"?x.en:x.q}</h3>
+  <div class="options">
+   ${x.o.map((o,j)=>`
+    <button onclick="answer(this,${i},${j},${x.a})">${String.fromCharCode(65+j)}. ${o}</button>
+   `).join("")}
+  </div>
+  <p id="exp${i}" class="note hide" style="margin-top:10px"></p>
+ </div>
+ `).join("");
+}
+
+function answer(btn,i,selected,correct){
+ let parent=btn.parentElement;
+ [...parent.children].forEach(b=>b.disabled=true);
+ let exp=document.getElementById("exp"+i);
+ if(selected===correct){
+  btn.classList.add("correct");
+  score++;
+  exp.innerHTML="✅ Correct! "+mcqs[i].exp;
+ }else{
+  btn.classList.add("wrong");
+  parent.children[correct].classList.add("correct");
+  wrong.push(mcqs[i]);
+  exp.innerHTML="❌ Incorrect. "+mcqs[i].exp;
+ }
+ attempted++;
+ exp.classList.remove("hide");
+ progress["mcq"]=(progress["mcq"]||0)+1;
+ save();
+}
+
+/* =========================================================
+   MOCK TEST
+========================================================= */
+
+let mockIndex=0;
+let mockScore=0;
+let mockQuestions=[];
+
+function startMock(){
+ mockQuestions=[...mcqs].sort(()=>Math.random()-.5).slice(0,10);
+ mockIndex=0;
+ mockScore=0;
+ renderMock();
+}
+
+function renderMock(){
+ if(mockIndex>=mockQuestions.length){
+  document.getElementById("app").innerHTML=`
+   <div class="hero">
+    <h1>🎯 Mock Test Complete</h1>
+    <p>Your performance</p>
+   </div>
+   <div class="stat">
+    <div><strong>${mockScore}</strong><small>Correct</small></div>
+    <div><strong>${mockQuestions.length}</strong><small>Total</small></div>
+   </div>
+   <div class="box" style="margin-top:15px">
+    <h3>Score: ${Math.round(mockScore/mockQuestions.length*100)}%</h3>
+    <p class="note">Keep practicing and improve your performance.</p>
+   </div>
+   <button class="btn" onclick="startMock()">🔄 Retake Mock</button>
+   <button class="btn secondary" onclick="home()">Home</button>
+  `;
+  return;
+ }
+
+ let q=mockQuestions[mockIndex];
+
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Exit Test</button>
+ <div class="timer">⏱️ Question ${mockIndex+1} / ${mockQuestions.length}</div>
+ <div class="question">
+  <span class="badge">${q.sub}</span>
+  <h3 style="margin:12px 0">${language==="en"?q.en:q.q}</h3>
+  <div class="options">
+   ${q.o.map((o,j)=>`
+    <button onclick="mockAnswer(${j},${q.a})">${String.fromCharCode(65+j)}. ${o}</button>
+   `).join("")}
+  </div>
+ </div>
+ `;
+}
+
+function mockAnswer(selected,correct){
+ if(selected===correct)mockScore++;
+ mockIndex++;
+ renderMock();
+}
+
+/* =========================================================
+   CHAPTER TEST
+========================================================= */
+
+function chapterTest(subject){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showNotes()">← Subjects</button>
+ <div class="hero">
+  <h1>📖 ${subject} Chapter Test</h1>
+  <p>Test your chapter preparation.</p>
+ </div>
+ <button class="btn" onclick="startMock()">Start Test</button>
+ `;
+}
+
+/* =========================================================
+   PYQ
+========================================================= */
+
+function showPYQ(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">📄 Previous Year Questions</h2>
+ <div class="grid">
+ ${exams.slice(0,12).map(e=>`
+  <div class="card" onclick="startMock()">
+   <div class="icon">📄</div>
+   <h3>${e[0]} PYQ</h3>
+   <p>Practice previous-year style questions</p>
+  </div>
+ `).join("")}
+ </div>
+ `;
+}
+
+/* =========================================================
+   SUBJECTS / CHAPTERS
+========================================================= */
+
+function showSubjects(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">📖 Chapter-wise Tests</h2>
+ <div class="grid">
+ ${subjects.map(s=>`
+  <div class="card" onclick="chapterTest('${s[0]}')">
+   <div class="icon">${s[1]}</div>
+   <h3>${s[0]}</h3>
+   <p>Chapter tests</p>
+  </div>
+ `).join("")}
+ </div>
+ `;
+}
+
+/* =========================================================
+   REVISION
+========================================================= */
+
+function showRevision(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <div class="hero">
+  <h1>⚡ Quick Revision</h1>
+  <p>Exam se pehle important topics quickly revise करें।</p>
+ </div>
+ <div class="grid">
+ ${notes.slice(0,8).map(n=>`
+  <div class="card">
+   <div class="icon">⚡</div>
+   <h3>${n[1]}</h3>
+   <p>${n[2]}</p>
+  </div>
+ `).join("")}
+ </div>
+ `;
+}
+
+/* =========================================================
+   MORE
+========================================================= */
+
+function showMore(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="home()">← Home</button>
+ <h2 class="section-title">☰ More Features</h2>
+ <div class="grid">
+  <div class="card" onclick="showBookmarks()"><div class="icon">🔖</div><h3>Bookmarks</h3></div>
+  <div class="card" onclick="showWrong()"><div class="icon">❌</div><h3>Wrong Questions</h3></div>
+  <div class="card" onclick="showProgress()"><div class="icon">📊</div><h3>Performance</h3></div>
+  <div class="card" onclick="toggleDark()"><div class="icon">🌙</div><h3>Dark Mode</h3></div>
+  <div class="card" onclick="showSyllabus()"><div class="icon">📋</div><h3>Syllabus</h3></div>
+  <div class="card" onclick="showVocabulary()"><div class="icon">🔤</div><h3>Vocabulary</h3></div>
+ </div>
+ `;
+}
+
+function showBookmarks(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showMore()">← More</button>
+ <h2 class="section-title">🔖 Bookmarks</h2>
+ <div class="box">Questions saved for revision will appear here.</div>
+ `;
+}
+
+function showWrong(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showMore()">← More</button>
+ <h2 class="section-title">❌ Wrong Questions</h2>
+ <div class="box">
+  <h3>${wrong.length} questions</h3>
+  <p class="note">Wrong questions ko dobara practice karein.</p>
+ </div>
+ `;
+}
+
+function showProgress(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showMore()">← More</button>
+ <h2 class="section-title">📊 Performance</h2>
+ <div class="stat">
+  <div><strong>${attempted}</strong><small>Questions</small></div>
+  <div><strong>${score}</strong><small>Correct</small></div>
+  <div><strong>${attempted?Math.round(score/attempted*100):0}%</strong><small>Accuracy</small></div>
+  <div><strong>${progress.mcq||0}</strong><small>Practice</small></div>
+ </div>
+ `;
+}
+
+function toggleDark(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem("dark",document.body.classList.contains("dark"));
+}
+
+function showSyllabus(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showMore()">← More</button>
+ <h2 class="section-title">📋 Exam Syllabus</h2>
+ ${subjects.map(s=>`
+ <div class="box">
+  <h3>${s[1]} ${s[0]}</h3>
+  <p class="note">Important chapters • Concepts • Practice Questions • Mock Tests • Revision</p>
+ </div>
+ `).join("")}
+ `;
+}
+
+function showVocabulary(){
+ document.getElementById("app").innerHTML=`
+ <button class="back" onclick="showMore()">← More</button>
+ <h2 class="section-title">🔤 English Vocabulary</h2>
+ <div class="box">
+  <h3>Important Words</h3>
+  <p class="note">
+   Abundant — Plenty<br>
+   Accurate — Correct<br>
+   Brave — Courageous<br>
+   Rapid — Fast<br>
+   Essential — Necessary<br>
+   Genuine — Real<br>
+   Ancient — Very old
+  </p>
+ </div>
+ `;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function globalSearch(value){
+ if(!value.trim())return;
+ let q=value.toLowerCase();
+ let result=exams.filter(e=>e[0].toLowerCase().includes(q));
+ if(result.length){
+  document.getElementById("app").innerHTML=`
+   <button class="back" onclick="home()">← Home</button>
+   <h2 class="section-title">🔍 Search Results</h2>
+   <div id="searchResults"></div>
+  `;
+  renderExams(result);
+ }
+}
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+if(localStorage.getItem("dark")==="true")
+ document.body.classList.add("dark");
+
+home();
+
+</script>
+
+</body>
+</html>
